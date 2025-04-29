@@ -1,47 +1,41 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Invia dati al server locale</title>
-</head>
-<body>
-  <h1>Inserisci i tuoi dati</h1>
-  <form id="dataForm">
-    <input type="text" id="nome" placeholder="Nome" required><br>
-    <input type="email" id="email" placeholder="Email" required><br>
-    <button type="submit">Invia</button>
-  </form>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invia Numero</title>
+  </head>
+  <body>
+    <h1>Invia un Numero</h1>
+    <form id="dataForm">
+      <input type="number" id="numero" placeholder="Inserisci un numero" required /><br />
+      <button type="submit">Invia</button>
+    </form>
 
-  <script>
-    document.getElementById('dataForm').addEventListener('submit', function(event) {
-      event.preventDefault();  // Impedisce il comportamento di submit predefinito
+    <script>
+      document.getElementById("dataForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // Blocca il comportamento di submit predefinito
 
-      // Preleva i dati dal form
-      const nome = document.getElementById('nome').value;
-      const email = document.getElementById('email').value;
+        const numero = document.getElementById("numero").value;
 
-      // Crea l'oggetto da inviare
-      const dati = { nome, email };
-
-      // Invia la richiesta al server locale
-      fetch('http://localhost:3000/dati', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dati),  // Invia i dati in formato JSON
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        alert('Dati inviati con successo!');
-      })
-      .catch(error => {
-        console.error('Errore:', error);
-        alert('Si è verificato un errore.');
+        // Invia i dati al server locale
+        fetch("http://localhost:3000/invia", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ numero: numero }),
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            alert("Numero inviato correttamente!");
+          })
+          .catch(error => {
+            console.error("Errore:", error);
+            alert("Errore nell'invio dei dati");
+          });
       });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
